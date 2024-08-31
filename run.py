@@ -33,6 +33,7 @@ def get_sales_data():
         if validate_data(sales_data):
             print("Data is valid!")
             break
+
     return sales_data
 
 
@@ -42,7 +43,6 @@ def validate_data(values):
     Raises ValueError if strings cannot be converted into int, 
     or if there aren't exactly 6 values.
     """
-
     try:
         [int(value) for value in values]
         if len(values) != 6:
@@ -55,26 +55,26 @@ def validate_data(values):
 
     return True
 
-"""
-def update_sales_worksheet(data):
-    """
-    Update sales worksheet, add new row with the list data provided.
-    """
-    print("Updating sales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated correctly\n")
+
+# def update_sales_worksheet(data):
+#     """
+#     Update sales worksheet, add new row with the list data provided.
+#     """
+#     print("Updating sales worksheet...\n")
+#     sales_worksheet = SHEET.worksheet("sales")
+#     sales_worksheet.append_row(data)
+#     print("Sales worksheet updated correctly\n")
 
 
-def update_surplus_worksheet(data):
-    """
-    Update surplus worksheet, add new row with the list data provided.
-    """
-    print("Updating surplus worksheet...\n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(data)
-    print("Surplus worksheet updated correctly\n")
-""""""
+# def update_surplus_worksheet(data):
+#     """
+#     Update surplus worksheet, add new row with the list data provided.
+#     """
+#     print("Updating surplus worksheet...\n")
+#     surplus_worksheet = SHEET.worksheet("surplus")
+#     surplus_worksheet.append_row(data)
+#     print("Surplus worksheet updated correctly\n")
+
 
 def update_worksheet (data, worksheet):
     """
@@ -105,6 +105,21 @@ def calculate_surplus_data(sales_row):
 
     return surplus_data
 
+def get_last_5_sales_entries():
+    """
+    Collects columns of data from sales worksheet, collecting 
+    the last 5 entries for each sandwich and returns the data
+    as a list of lists.
+    """
+    sales = SHEET.worksheet("sales")
+
+    columns = []
+    for ind in range(1, 7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+
+    pprint(columns)
+
 
 def main():
     """
@@ -118,7 +133,9 @@ def main():
 
 
 print("Welcome to Love Sandwiches data automation\n")
-main()
+# main()
+
+sales_columns = get_last_5_sales_entries()
 
 
 
